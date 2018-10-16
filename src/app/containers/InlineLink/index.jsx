@@ -8,9 +8,8 @@ import { tldRegex, pathRegex } from '../../routes';
 const InternalInlineLink = InlineLink.withComponent(Link);
 
 const InlineLinkContainer = ({ href, children, ...rest }) => {
-  const wholeRegex = `(${tldRegex})?${pathRegex}`;
-  const result = pathToRegexp(wholeRegex, [], { start: false, end: false });
-  console.log(wholeRegex);
+  const result = pathToRegexp(pathRegex, [], { start: false, end: false });
+  console.log(pathRegex);
   console.log(result);
   console.log(result.exec(href));
   // if URL matches a valid route, use a react-router link
