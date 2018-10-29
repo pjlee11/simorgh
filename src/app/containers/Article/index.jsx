@@ -11,7 +11,11 @@ import MainContent from '../../components/MainContent';
 import articlePropTypes from '../../models/propTypes/article';
 import { ServiceContextProvider } from '../../components/ServiceContext';
 import Timestamp from '../../components/Timestamp';
-import { GridItemFullWidth, StyledHeadlineWrapper } from '../../lib/layoutGrid';
+import {
+  GridItem,
+  GridItemFullWidth,
+  StyledHeadlineWrapper,
+} from '../../lib/layoutGrid';
 
 const componentsToRenderHeadline = {
   headline: headings,
@@ -79,7 +83,9 @@ const ArticleContainer = ({ loading, error, data }) => {
                   blocks={headlineBlocks}
                   componentsToRender={componentsToRenderHeadline}
                 />
-                <Timestamp timestamp={metadata.lastUpdated} />
+                <GridItem>
+                  <Timestamp timestamp={metadata.lastUpdated} />
+                </GridItem>
               </FullWidth>
               <Blocks
                 blocks={mainBlocks}
