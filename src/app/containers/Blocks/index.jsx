@@ -1,6 +1,7 @@
 import React from 'react';
 import { objectOf, arrayOf, func, shape, string, any } from 'prop-types';
 import nanoid from 'nanoid';
+import { GridItem } from '../../lib/layoutGrid';
 
 // Inlined as this is a temporary component
 const BlockString = props => {
@@ -17,12 +18,14 @@ const Blocks = ({ blocks, componentsToRender }) =>
     const Block = componentsToRender[type] || BlockString;
 
     return (
-      <Block
-        key={nanoid()}
-        type={type}
-        typeOfPreviousBlock={typeOfPreviousBlock}
-        {...model}
-      />
+      <GridItem>
+        <Block
+          key={nanoid()}
+          type={type}
+          typeOfPreviousBlock={typeOfPreviousBlock}
+          {...model}
+        />
+      </GridItem>
     );
   });
 

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { bool, string, shape } from 'prop-types';
+import { bool, string, shape, node } from 'prop-types';
 import MetadataContainer from '../Metadata';
 import Header from '../../components/Header';
 import Footer from '../Footer';
@@ -11,6 +11,7 @@ import MainContent from '../../components/MainContent';
 import articlePropTypes from '../../models/propTypes/article';
 import { ServiceContextProvider } from '../../components/ServiceContext';
 import Timestamp from '../../components/Timestamp';
+import { GridItemFullWidth, StyledHeadlineWrapper } from '../../lib/layoutGrid';
 
 const componentsToRenderHeadline = {
   headline: headings,
@@ -32,6 +33,16 @@ const splitBlocksByHeadline = ({ model }) => {
   const mainBlocks = blocks.slice(headlineIndexPlusOne, blocks.length);
 
   return { headlineBlocks, mainBlocks };
+};
+
+const FullWidth = ({ children }) => (
+  <GridItemFullWidth>
+    <StyledHeadlineWrapper>{children}</StyledHeadlineWrapper>
+  </GridItemFullWidth>
+);
+
+FullWidth.propTypes = {
+  children: node.isRequired,
 };
 
 /*
@@ -63,11 +74,13 @@ const ArticleContainer = ({ loading, error, data }) => {
               service={service}
             />
             <MainContent>
-              <Blocks
-                blocks={headlineBlocks}
-                componentsToRender={componentsToRenderHeadline}
-              />
-              <Timestamp timestamp={metadata.lastUpdated} />
+              <FullWidth>
+                <Blocks
+                  blocks={headlineBlocks}
+                  componentsToRender={componentsToRenderHeadline}
+                />
+                <Timestamp timestamp={metadata.lastUpdated} />
+              </FullWidth>
               <Blocks
                 blocks={mainBlocks}
                 componentsToRender={componentsToRenderMain}

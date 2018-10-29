@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
   GEL_SPACING,
   GEL_SPACING_DBL,
@@ -13,39 +13,59 @@ import {
 export const layoutGridWrapper = css`
   display: grid;
   @media (max-width: ${group3ScreenWidthMin}) {
-    grid-gap: ${GEL_SPACING}; /* Between grid items */
-    padding: 0 ${GEL_SPACING}; /* On grid wrapper */
+    grid-gap: 0 ${GEL_SPACING}; /* Between grid items */
   }
   @media (min-width: ${group3ScreenWidthMin}) {
-    grid-gap: ${GEL_SPACING_DBL}; /* Between grid items */
-    padding: 0 ${GEL_SPACING_DBL}; /* On grid wrapper */
+    grid-gap: 0 ${GEL_SPACING_DBL}; /* Between grid items */
   }
   @media (max-width: ${group3ScreenWidthMax}) {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, [col] 1fr);
   }
   @media (min-width: ${group4ScreenWidthMin}) and (max-width: ${group4ScreenWidthMax}) {
-    grid-template-columns: repeat(8, 1fr);
+    /* 
+      Math: (1008 - (7*16))/8 = 112
+      Explainer: (width - 7 gaps of 16) / 8 columns = single column width
+    */
+    grid-template-columns: [start] 1fr repeat(8, [col] minmax(0, 7rem)) 1fr [end];
   }
   @media (min-width: ${group5ScreenWidthMin}) {
-    grid-template-columns: repeat(10, 1fr);
+    /* 
+      Math: (1280 - (9*16))/10 = 113.6
+      Explainer: (width - 9 gaps of 16) / 10 columns = single column width
+    */
+    grid-template-columns: [start] 1fr repeat(10, [col] minmax(0, 7.1rem)) 1fr [end];
   }
 `;
 
 export const layoutGridItem = css`
   @media (max-width: ${group2ScreenWidthMax}) {
     grid-column: 1 / -1;
+    padding: 0 ${GEL_SPACING};
   }
   @media (min-width: ${group3ScreenWidthMin}) and (max-width: ${group3ScreenWidthMax}) {
-    grid-column: 2 / -2;
+    grid-column: col 2 / span 4;
   }
   @media (min-width: ${group4ScreenWidthMin}) and (max-width: ${group4ScreenWidthMax}) {
-    grid-column: 2 / -2;
+    grid-column: col 2 / span 6;
   }
   @media (min-width: ${group5ScreenWidthMin}) {
-    grid-column: 3 / -3;
+    grid-column: col 3 / span 6;
   }
 `;
 
 export const layoutGridItemFullWidth = css`
   grid-column: 1 / -1;
+`;
+
+export const StyledHeadlineWrapper = styled.div`
+  ${layoutGridWrapper};
+  background-color: white;
+`;
+
+export const GridItemFullWidth = styled.div`
+  ${layoutGridItemFullWidth};
+`;
+
+export const GridItem = styled.div`
+  ${layoutGridItem};
 `;
