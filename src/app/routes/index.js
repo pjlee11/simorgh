@@ -1,14 +1,20 @@
-import Table from '../components/Table';
+import LocationStoryIndex from '../containers/LocationStoryIndex';
 import getInitialData from './getInitialData';
+import services from '../lib/config/services';
 
-const teamRegex = '[a-zA-Z-]+';
-export const teamRegexPath = `/:team1(${teamRegex})-against-:team2(${teamRegex})`;
+const serviceRegex = Object.keys(services)
+  .filter(serviceName => serviceName !== 'default')
+  .join('|');
+const idRegex = 'c[a-zA-Z0-9]{10}o';
+const ampRegex = '.amp';
+
+export const articleRegexPath = `/:service(${serviceRegex})/articles/:id(${idRegex}):amp(${ampRegex})?`;
 
 const routes = [
   {
-    path: teamRegexPath,
+    path: articleRegexPath,
     exact: true,
-    component: Table,
+    component: LocationStoryIndex,
     getInitialData,
   },
 ];
